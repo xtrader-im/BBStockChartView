@@ -27,7 +27,7 @@
     [linePath moveToPoint: from];
     [linePath addLineToPoint:to];
     line.path = linePath.CGPath;
-    line.fillColor = nil;
+    line.fillColor = color.CGColor;
     line.opacity = 1.0;
     line.strokeColor = color.CGColor;
     line.lineWidth = width;
