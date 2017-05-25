@@ -38,7 +38,7 @@
         }
         if (text && text.length > 0) {
 //            NSLog(@"Draw x: %d", i);
-            CATextLayer* label = [BaseLayer layerOfText:text withFont:@"HelveticaNeue" fontSize:[BBTheme theme].xAxisFontSize andColor:[BBTheme theme].axisColor];
+            CATextLayer* label = [BaseLayer layerOfText:text withFont:[BBTheme theme].fontName fontSize:[BBTheme theme].xAxisFontSize andColor:[BBTheme theme].axisColor];
             CGFloat w = [BBChartUtils textBoundsForFont:text andSize:[BBTheme theme].xAxisFontSize text:text].width;
             if (i == self.idxNum-1 || idxWidth*i+idxWidth/2+w > width) {
                 label.alignmentMode = kCAAlignmentRight;

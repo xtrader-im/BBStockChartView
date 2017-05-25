@@ -33,6 +33,7 @@ BBTheme* _defTheme = nil;
         _defTheme.defTextColor = [UIColor whiteColor];
         _defTheme.defLineColor = [UIColor whiteColor];
         _defTheme.defLineWidth = 1;
+        _defTheme.fontName = @"HelveticaNeue";
     }
     return _defTheme;
 }

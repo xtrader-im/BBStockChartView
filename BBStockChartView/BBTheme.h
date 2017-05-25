@@ -28,6 +28,7 @@
 @property (nonatomic) CGFloat xAxisFontSize;
 @property (nonatomic) CGFloat yAxisFontSize;
 @property (nonatomic) UIColor* axisColor;
+@property (nonatomic,strong) NSString   *fontName;
 
 @property (nonatomic) UIColor* backgroundColor;
 @property (nonatomic) UIColor* borderColor;

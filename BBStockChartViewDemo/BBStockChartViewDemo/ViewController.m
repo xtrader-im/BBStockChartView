@@ -61,6 +61,7 @@
     // set any color you like
     [BBTheme theme].barBorderColor = [UIColor clearColor];
     [BBTheme theme].xAxisFontSize = 11;
+    [BBTheme theme].axisColor = [UIColor colorWithWhite:1 alpha:0.6];
     
     // begin to show the view animated
     [self.chartView drawAnimated:YES];

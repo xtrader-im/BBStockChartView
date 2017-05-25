@@ -98,7 +98,7 @@
         if (val > 1000) {
             lab = [NSString stringWithFormat:@"%.1f", val];
         }
-        CATextLayer* t = [BaseLayer layerOfText:lab withFont:@"Helvetica" fontSize:[BBTheme theme].yAxisFontSize andColor:[BBTheme theme].axisColor];
+        CATextLayer* t = [BaseLayer layerOfText:lab withFont:[BBTheme theme].fontName fontSize:[BBTheme theme].yAxisFontSize andColor:[BBTheme theme].axisColor];
         t.alignmentMode = kCAAlignmentRight;
 
 //        NSLog(@"mark val:%.1f H:%f", [self valForHeigth:curHei], curHei);
