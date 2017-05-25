@@ -9,9 +9,10 @@
 #import <QuartzCore/QuartzCore.h>
 #import "BaseLayer.h"
 
+@class AxisX;
 @protocol AxisXLabelProvider
 @required
--(NSString*)textForIdx:(NSUInteger)idx;
+- (NSString *)axisX:(AxisX *)x textForIdx:(NSUInteger)idx;
 @end
 
 @interface AxisX : BaseLayer

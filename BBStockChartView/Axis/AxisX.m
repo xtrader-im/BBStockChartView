@@ -32,7 +32,7 @@
     for(int i = 0; i < self.idxNum; i += 1){
         NSString* text = nil;
         if (self.labelProvider) {
-            text = [self.labelProvider textForIdx:i];
+            text = [self.labelProvider axisX:self textForIdx:i];
         }else{
             text = [NSString stringWithFormat:@"%d", i+1];
         }
