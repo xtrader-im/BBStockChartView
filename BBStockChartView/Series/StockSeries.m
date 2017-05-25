@@ -37,21 +37,16 @@
     if (idx >= self.data.count) {
         return;
     }
-    StockSeriesPoint* point = (StockSeriesPoint*)(self.data[idx]);
-    UIColor* color = nil;
-    if (idx == 0) {
-        color = [BBTheme theme].riseColor;
-    }else{
-        StockSeriesPoint* prePoint = (StockSeriesPoint*)(self.data[idx-1]);
-        if (prePoint.open >= point.open) {
-            color = [BBTheme theme].fallColor;
-        }else{
-            color = [BBTheme theme].riseColor;
-        }
-    }
-    CGFloat height = self.bounds.size.height;
-//    CGFloat width = self.bounds.size.width;
     
+    StockSeriesPoint *point = (StockSeriesPoint *)(self.data[idx]);
+    UIColor *color = nil;
+    if (point.open >= point.close) {
+        color = [BBTheme theme].riseColor;
+    } else {
+        color = [BBTheme theme].fallColor;
+    }
+    
+    CGFloat height = self.bounds.size.height;
     
     CGFloat x = idx * self.pointWidth + self.pointWidth / 2;
     CGFloat y1 = height - [self.axisAttached heighForVal:point.high];
@@ -75,9 +70,8 @@
     CALayer* oc = [BaseLayer layerOfLineFrom:CGPointZero to:CGPointMake(0, y1-y2+1) withColor:color andWidth:ocWidth];
     oc.position = CGPointMake(x, y2);
     
-//    NSLog(@"StockPoint val:%.1f, height:%.1f", point.open, y1);
-    [self addSublayer:oc];
     [self addSublayer:lh];
+    [self addSublayer:oc];
     
     if (animated) {
         CABasicAnimation* ani = [CABasicAnimation animationWithKeyPath:@"transform.scale.y"];
