@@ -44,9 +44,9 @@
     }else{
         StockSeriesPoint* prePoint = (StockSeriesPoint*)(self.data[idx-1]);
         if (prePoint.open >= point.open) {
-            color = [BBTheme theme].riseColor;
-        }else{
             color = [BBTheme theme].fallColor;
+        }else{
+            color = [BBTheme theme].riseColor;
         }
     }
     CGFloat height = self.bounds.size.height;

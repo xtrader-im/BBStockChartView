@@ -73,7 +73,8 @@
 }
 
 #pragma mark - AxisDataProvider
-- (NSString *)textForIdx:(NSUInteger)idx{
+
+- (NSString *)axisX:(AxisX *)x textForIdx:(NSUInteger)idx {
     NSString* ret = nil;
     
     // Too much labels would make them overlapping
