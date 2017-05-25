@@ -10,8 +10,6 @@
 
 @interface BarSeries : Series
 
-
-
--(void) addPoint:(float)p;
+- (void)addPoint:(float)p rise:(BOOL)isRise;
 
 @end

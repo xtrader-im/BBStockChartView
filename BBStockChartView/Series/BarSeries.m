@@ -9,17 +9,24 @@
 #import "BarSeries.h"
 #import "BBTheme.h"
 
+@interface BarSeries ()
+
+@property (nonatomic, strong) NSMutableArray<NSNumber *>  *riseOrFall;
+
+@end
+
 @implementation BarSeries
 
 -(instancetype)init{
     self = [super init];
     if (self) {
-
+        _riseOrFall = [NSMutableArray array];
     }
     return self;
 }
-- (void)addPoint:(float)p{
-    [super.data addObject:[NSNumber numberWithFloat:p]];
+- (void)addPoint:(float)p rise:(BOOL)isRise {
+    [self.data addObject:[NSNumber numberWithFloat:p]];
+    [self.riseOrFall addObject:@(isRise)];
 }
 
 - (void)drawPoint:(NSUInteger)idx animated:(BOOL)animated{
@@ -27,8 +34,14 @@
         return;
     }
     CALayer* l = [[CALayer alloc] init];
-    l.backgroundColor = [BBTheme theme].barFillColor.CGColor;
-    l.borderColor = [BBTheme theme].barBorderColor.CGColor;
+    if (self.riseOrFall[idx].boolValue) {
+        l.backgroundColor = [BBTheme theme].riseColor.CGColor;
+        l.borderColor = [BBTheme theme].riseColor.CGColor;
+    } else {
+        l.backgroundColor = [BBTheme theme].fallColor.CGColor;
+        l.borderColor = [BBTheme theme].fallColor.CGColor;
+    }
+    
     l.borderWidth = 1;
     l.anchorPoint = CGPointMake(0, 1);
     CGFloat h =[self.axisAttached heighForVal:((NSNumber*)self.data[idx]).floatValue];

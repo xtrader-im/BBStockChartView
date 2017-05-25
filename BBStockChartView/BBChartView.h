@@ -22,7 +22,7 @@
 
 -(void)drawAnimated:(BOOL)animated;
 -(void)reset;
-
+- (void)redraw;
 
 
 @end
