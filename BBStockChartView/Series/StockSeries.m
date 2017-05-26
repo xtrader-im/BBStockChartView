@@ -40,7 +40,8 @@
     
     StockSeriesPoint *point = (StockSeriesPoint *)(self.data[idx]);
     UIColor *color = nil;
-    if (point.open > point.close) {
+    BOOL isFall = point.open > point.close;
+    if (isFall) {
         color = [BBTheme theme].fallColor;
     } else {
         color = [BBTheme theme].riseColor;
@@ -51,18 +52,11 @@
     CGFloat x = idx * self.pointWidth + self.pointWidth / 2;
     CGFloat y1 = height - [self.axisAttached heighForVal:point.high];
     CGFloat y2 = height - [self.axisAttached heighForVal:point.low];
-    CGFloat ty3 = height - [self.axisAttached heighForVal:point.open];
-    CGFloat ty4 = height - [self.axisAttached heighForVal:point.close];
-    CGFloat y3 = MAX(ty3, ty4);
-    CGFloat y4 = MIN(ty3, ty4);
 
-    CALayer *lht = [BaseLayer layerOfLineFrom:CGPointZero to:CGPointMake(0, y1 - y3+1) withColor:color andWidth:1];
-    lht.position = CGPointMake(x, y3);
+    CALayer* lh = [BaseLayer layerOfLineFrom:CGPointZero to:CGPointMake(0, y1-y2+1) withColor:color andWidth:1];
+    lh.position = CGPointMake(x, y2);
     
-    CALayer *lhb = [BaseLayer layerOfLineFrom:CGPointZero to:CGPointMake(0, y4 - y2+1) withColor:color andWidth:1];
-    lht.position = CGPointMake(x, y2);
-    
-    if (point.open > point.close) {
+    if (isFall) {
         y1 = height - [self.axisAttached heighForVal:point.open];
         y2 = height - [self.axisAttached heighForVal:point.close];
     }else{
@@ -77,8 +71,7 @@
     CALayer* oc = [BaseLayer layerOfLineFrom:CGPointZero to:CGPointMake(0, y1-y2+1) withColor:color andWidth:ocWidth];
     oc.position = CGPointMake(x, y2);
     
-    [self addSublayer:lht];
-    [self addSublayer:lhb];
+    [self addSublayer:lh];
     [self addSublayer:oc];
     
     if (animated) {
@@ -89,8 +82,7 @@
         ani.duration = 1;
         
         [oc addAnimation:ani forKey:nil];
-        [lht addAnimation:ani forKey:nil];
-        [lhb addAnimation:ani forKey:nil];
+        [lh addAnimation:ani forKey:nil];
     }
     
 }
