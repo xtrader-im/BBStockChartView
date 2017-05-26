@@ -48,7 +48,7 @@
     [areaup addSeries:line2];
     
     for (NSArray* arr in _chartData) {
-        [bar addPoint:Float(arr[1])];
+        [bar addPoint:Float(arr[1]) rise:arr[2] < arr[5]];
         [stock addPointOpen:Float(arr[2]) close:Float(arr[5]) low:Float(arr[4]) high:Float(arr[3])];
         [line addPoint: (Float(arr[2]) + Float(arr[5]))/2 - 300];
         [line2 addPoint:(Float(arr[4]) + Float(arr[3]))/2];

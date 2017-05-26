@@ -35,7 +35,7 @@
     }
     CALayer* l = [[CALayer alloc] init];
     if (self.riseOrFall[idx].boolValue) {
-        l.backgroundColor = [BBTheme theme].riseColor.CGColor;
+        l.backgroundColor = UIColor.clearColor.CGColor;
         l.borderColor = [BBTheme theme].riseColor.CGColor;
     } else {
         l.backgroundColor = [BBTheme theme].fallColor.CGColor;
