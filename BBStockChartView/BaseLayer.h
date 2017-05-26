@@ -17,7 +17,9 @@
 - (void)drawAnimated:(BOOL)animated;
 - (void)redrawAnimated:(BOOL)animated;
 
-+ (CALayer*) layerOfLineFrom:(CGPoint)from to:(CGPoint)to withColor:(UIColor*)color andWidth:(CGFloat)width;
++ (CALayer *)layerOfRectFrom:(CGPoint)from to:(CGPoint)to withColor:(UIColor*)color andWidth:(CGFloat)width fill:(BOOL)fill;
++ (CALayer *)layerOfLineFrom:(CGPoint)from to:(CGPoint)to withColor:(UIColor*)color andWidth:(CGFloat)width fill:(BOOL)fill;
 
 + (CATextLayer *)layerOfText:(NSString *)text withFont:(NSString*)font fontSize:(CGFloat)fontSize andColor:(UIColor *)color;
+
 @end

@@ -52,9 +52,14 @@
     CGFloat x = idx * self.pointWidth + self.pointWidth / 2;
     CGFloat y1 = height - [self.axisAttached heighForVal:point.high];
     CGFloat y2 = height - [self.axisAttached heighForVal:point.low];
+    CGFloat y3 = height - [self.axisAttached heighForVal:isFall ? point.open : point.close];
+    CGFloat y4 = height - [self.axisAttached heighForVal:isFall ? point.close : point.open];
 
-    CALayer* lh = [BaseLayer layerOfLineFrom:CGPointZero to:CGPointMake(0, y1-y2+1) withColor:color andWidth:1];
-    lh.position = CGPointMake(x, y2);
+    CALayer *lht = [BaseLayer layerOfLineFrom:CGPointZero to:CGPointMake(0, y1-y3) withColor:color andWidth:1 fill:NO];
+    lht.position = CGPointMake(x, y3);
+    
+    CALayer *lhb = [BaseLayer layerOfLineFrom:CGPointZero to:CGPointMake(0, y4-y2) withColor:color andWidth:1 fill:NO];
+    lhb.position = CGPointMake(x, y2);
     
     if (isFall) {
         y1 = height - [self.axisAttached heighForVal:point.open];
@@ -68,10 +73,11 @@
     if (self.pointWidth <= ocWidth+2) {
         ocWidth = self.pointWidth - 2;
     }
-    CALayer* oc = [BaseLayer layerOfLineFrom:CGPointZero to:CGPointMake(0, y1-y2+1) withColor:color andWidth:ocWidth];
+    CALayer* oc = [BaseLayer layerOfRectFrom:CGPointZero to:CGPointMake(0, y1-y2) withColor:color andWidth:ocWidth fill:isFall];
     oc.position = CGPointMake(x, y2);
     
-    [self addSublayer:lh];
+    [self addSublayer:lht];
+    [self addSublayer:lhb];
     [self addSublayer:oc];
     
     if (animated) {
@@ -82,7 +88,8 @@
         ani.duration = 1;
         
         [oc addAnimation:ani forKey:nil];
-        [lh addAnimation:ani forKey:nil];
+        [lht addAnimation:ani forKey:nil];
+        [lhb addAnimation:ani forKey:nil];
     }
     
 }

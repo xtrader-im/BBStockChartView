@@ -80,7 +80,7 @@
 -(void)drawAnimated:(BOOL)animated{
     CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
-    CALayer* line = [BaseLayer layerOfLineFrom:CGPointZero to:CGPointMake(0, self.designHight+1) withColor:[BBTheme theme].axisColor andWidth:1.5];
+    CALayer* line = [BaseLayer layerOfLineFrom:CGPointZero to:CGPointMake(0, self.designHight+1) withColor:[BBTheme theme].axisColor andWidth:1.5 fill:NO];
     line.position = CGPointMake(self.bounds.size.width-2, 0);
     [self addSublayer:line];
     
@@ -91,7 +91,7 @@
 
     for (int i = 1; i < cnt; ++i) {
         CGFloat curHei = i * labelGap;
-        CALayer* dash = [BaseLayer layerOfLineFrom:CGPointMake(self.bounds.size.width-1.5-5, curHei) to:CGPointMake(self.bounds.size.width-2, curHei) withColor:[BBTheme theme].axisColor andWidth:1];
+        CALayer* dash = [BaseLayer layerOfLineFrom:CGPointMake(self.bounds.size.width-1.5-5, curHei) to:CGPointMake(self.bounds.size.width-2, curHei) withColor:[BBTheme theme].axisColor andWidth:1 fill:NO];
         
         CGFloat val = [self valForHeigth:height-curHei];
         NSString* lab = [NSString stringWithFormat:@"%.3f", val];

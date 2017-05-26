@@ -21,13 +21,40 @@
     
 }
 
-+ (CALayer *)layerOfLineFrom:(CGPoint)from to:(CGPoint)to withColor:(UIColor*)color andWidth:(CGFloat)width{
++ (CALayer *)layerOfRectFrom:(CGPoint)from to:(CGPoint)to withColor:(UIColor*)color andWidth:(CGFloat)width fill:(BOOL)fill {
+    CAShapeLayer *line = [CAShapeLayer layer];
+    UIBezierPath *linePath = [UIBezierPath bezierPath];
+    [linePath moveToPoint:CGPointMake(from.x - width * 0.5, from.y)];
+    [linePath addLineToPoint:CGPointMake(from.x - width * 0.5, to.y)];
+    [linePath addLineToPoint:CGPointMake(to.x + width * 0.5, to.y)];
+    [linePath addLineToPoint:CGPointMake(to.x + width * 0.5, from.y)];
+    [linePath closePath];
+    line.path = linePath.CGPath;
+    if (fill) {
+        line.fillColor = color.CGColor;
+    } else {
+        line.fillColor = nil;
+    }
+    
+    line.opacity = 1.0;
+    line.strokeColor = color.CGColor;
+    line.lineWidth = 1;
+    return line;
+}
+
+
++ (CALayer *)layerOfLineFrom:(CGPoint)from to:(CGPoint)to withColor:(UIColor*)color andWidth:(CGFloat)width fill:(BOOL)fill {
     CAShapeLayer *line = [CAShapeLayer layer];
     UIBezierPath *linePath = [UIBezierPath bezierPath];
     [linePath moveToPoint: from];
     [linePath addLineToPoint:to];
     line.path = linePath.CGPath;
-    line.fillColor = color.CGColor;
+    if (fill) {
+        line.fillColor = color.CGColor;
+    } else {
+        line.fillColor = nil;
+    }
+    
     line.opacity = 1.0;
     line.strokeColor = color.CGColor;
     line.lineWidth = width;

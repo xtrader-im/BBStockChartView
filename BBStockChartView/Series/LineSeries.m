@@ -31,7 +31,7 @@
     CGFloat height = self.bounds.size.height;
     float y1 = height - [self.axisAttached heighForVal:((NSNumber*)self.data[idx-1]).floatValue];
     float y2 = height - [self.axisAttached heighForVal:((NSNumber*)self.data[idx]).floatValue];
-    CALayer* line = [BaseLayer layerOfLineFrom:CGPointMake((idx-1)*self.pointWidth, y1) to:CGPointMake(idx*self.pointWidth, y2) withColor:self.color andWidth:self.width];
+    CALayer* line = [BaseLayer layerOfLineFrom:CGPointMake((idx-1)*self.pointWidth, y1) to:CGPointMake(idx*self.pointWidth, y2) withColor:self.color andWidth:self.width fill:NO];
 
     
     [self addSublayer:line];

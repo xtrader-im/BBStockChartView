@@ -15,7 +15,7 @@
 - (void)drawAnimated:(BOOL)animated{
     CGFloat height = self.bounds.size.height;
     CGFloat width = self.bounds.size.width;
-    CALayer* line = [BaseLayer layerOfLineFrom:CGPointZero to:CGPointMake(width+2, 0) withColor:[BBTheme theme].axisColor andWidth:1];
+    CALayer* line = [BaseLayer layerOfLineFrom:CGPointZero to:CGPointMake(width+2, 0) withColor:[BBTheme theme].axisColor andWidth:1 fill:NO];
     line.position = CGPointMake(-2, 1);
     line.anchorPoint = CGPointZero;
     [self addSublayer:line];
@@ -53,7 +53,7 @@
             [self addSublayer:label];
             
             
-            CALayer* dash = [BaseLayer layerOfLineFrom:CGPointMake(idxWidth/2, 0) to:CGPointMake(idxWidth/2, 5) withColor:[BBTheme theme].axisColor andWidth:1];
+            CALayer* dash = [BaseLayer layerOfLineFrom:CGPointMake(idxWidth/2, 0) to:CGPointMake(idxWidth/2, 5) withColor:[BBTheme theme].axisColor andWidth:1 fill:NO];
             dash.anchorPoint = CGPointZero;
             dash.position = CGPointMake(idxWidth*i, 1);
             [self addSublayer:dash];
