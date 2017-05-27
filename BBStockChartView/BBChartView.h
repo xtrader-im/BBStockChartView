@@ -16,6 +16,7 @@
 
 //when pinch the view, scale it in-time, not after. Default is NO.
 @property (nonatomic) BOOL realTimeScale;
+@property (nonatomic, assign) BOOL detailEnable;    // default as NO.
 
 -(void)setHeighRatio:(CGFloat)heightRatio forArea:(Area*)area;
 -(void)addArea:(Area *)area;

@@ -15,14 +15,15 @@
 @property (nonatomic) CGFloat minVal;
 @property (nonatomic) CGFloat maxVal;
 
+@property (nonatomic, assign) CGFloat designWidth;
 @property (nonatomic, readonly) CGFloat designHight;
 
 // For barSeries, the minValue shouldn't touch the bottom
 @property (nonatomic) BOOL touchBottom;
 
--(void)addContainingVal:(CGFloat) val;
+- (void)addContainingVal:(CGFloat)val;
 
--(CGFloat)heighForVal:(CGFloat) val;
--(CGFloat)valForHeigth:(CGFloat) height;
+- (CGFloat)heighForVal:(CGFloat)val;
+- (CGFloat)valForHeigth:(CGFloat)height;
 
 @end

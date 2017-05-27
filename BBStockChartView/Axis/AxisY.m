@@ -77,21 +77,22 @@
     return textSize;
 }
 
--(void)drawAnimated:(BOOL)animated{
+- (void)drawAnimated:(BOOL)animated{
     CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
-    CALayer* line = [BaseLayer layerOfLineFrom:CGPointZero to:CGPointMake(0, self.designHight+1) withColor:[BBTheme theme].axisColor andWidth:1.5 fill:NO];
+    CALayer* line = [BaseLayer layerOfLineFrom:CGPointZero to:CGPointMake(0, self.designHight + 1) withColor:[BBTheme theme].axisColor andWidth:1 fill:NO];
     line.position = CGPointMake(self.bounds.size.width-2, 0);
     [self addSublayer:line];
     
-    CGFloat labelGap = 20;
+    CGFloat labelGap = 40;
     
     NSUInteger cnt = self.bounds.size.height / labelGap;
     CGFloat labelHei = [self sizeOfText:@"abc" andSize:[BBTheme theme].yAxisFontSize].height;
 
-    for (int i = 1; i < cnt; ++i) {
+    for (int i = 0; i <= cnt; ++i) {
         CGFloat curHei = i * labelGap;
-        CALayer* dash = [BaseLayer layerOfLineFrom:CGPointMake(self.bounds.size.width-1.5-5, curHei) to:CGPointMake(self.bounds.size.width-2, curHei) withColor:[BBTheme theme].axisColor andWidth:1 fill:NO];
+        CALayer* dash = [BaseLayer layerOfLineFrom:CGPointMake(self.bounds.size.width-1.5-5, curHei) to:CGPointMake(self.bounds.size.width-2, curHei) withColor:[BBTheme theme].axisColor andWidth:0.5 fill:NO];
+        CALayer *line = [BaseLayer layerOfLineFrom:CGPointMake(self.bounds.size.width-2, curHei) to:CGPointMake(self.bounds.size.width - 2 + self.designWidth - 30, curHei) withColor:[[BBTheme theme].axisColor colorWithAlphaComponent:0.2] andWidth:0.5 fill:NO];
         
         CGFloat val = [self valForHeigth:height-curHei];
         NSString* lab = [NSString stringWithFormat:@"%.3f", val];
@@ -100,8 +101,7 @@
         }
         CATextLayer* t = [BaseLayer layerOfText:lab withFont:[BBTheme theme].fontName fontSize:[BBTheme theme].yAxisFontSize andColor:[BBTheme theme].axisColor];
         t.alignmentMode = kCAAlignmentRight;
-
-//        NSLog(@"mark val:%.1f H:%f", [self valForHeigth:curHei], curHei);
+        
         if (i == 0) {
             t.anchorPoint = CGPointZero;
         }else{
@@ -110,7 +110,8 @@
         
         t.position = CGPointMake(0, curHei);
         t.bounds = CGRectMake(0, 0, width-12, labelHei);
-
+        
+        [self addSublayer:line];
         [self addSublayer:t];
         [self addSublayer:dash];
     }

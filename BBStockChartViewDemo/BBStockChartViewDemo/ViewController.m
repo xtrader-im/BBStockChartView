@@ -20,7 +20,7 @@
     [super viewDidLoad];
     
     //init with any size, autolayout
-    _chartView = [[BBChartView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.height, self.view.frame.size.width)];
+    _chartView = [[BBChartView alloc] initWithFrame:CGRectMake(0, 10, self.view.frame.size.height, self.view.frame.size.width - 10)];
     [self.view addSubview:_chartView];
     // a sample data file stored in data.json
     [self loadData];
@@ -32,8 +32,14 @@
     Area* areaup = [[Area alloc] init];
     //set delegate for axis's data provider
     areaup.bottomAxis.labelProvider = self;
+    areaup.bottomAxis.designHeight = self.view.bounds.size.width * 0.7;
+    areaup.leftAxis.designWidth = self.view.bounds.size.height;
+    
     Area* areadown = [[Area alloc] init];
+    areadown.bottomAxis.designHeight = self.view.bounds.size.width * 0.3;
+    areadown.leftAxis.designWidth = self.view.bounds.size.height;
     areadown.bottomAxis.labelProvider = self;
+    
     BarSeries* bar = [[BarSeries alloc] init];
     StockSeries* stock = [[StockSeries alloc] init];
     LineSeries* line = [[LineSeries alloc] init];

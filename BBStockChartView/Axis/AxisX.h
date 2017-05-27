@@ -17,6 +17,7 @@
 
 @interface AxisX : BaseLayer
 
+@property (nonatomic, assign) CGFloat designHeight;
 @property (nonatomic) NSUInteger idxNum;
 
 @property (nonatomic, strong) id<AxisXLabelProvider> labelProvider;
