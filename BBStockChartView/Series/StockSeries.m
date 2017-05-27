@@ -55,10 +55,10 @@
     CGFloat y3 = height - [self.axisAttached heighForVal:isFall ? point.open : point.close];
     CGFloat y4 = height - [self.axisAttached heighForVal:isFall ? point.close : point.open];
 
-    CALayer *lht = [BaseLayer layerOfLineFrom:CGPointZero to:CGPointMake(0, y1-y3) withColor:color andWidth:1 fill:NO];
+    CALayer *lht = [BaseLayer layerOfLineFrom:CGPointZero to:CGPointMake(0, y1-y3) withColor:color andWidth:1];
     lht.position = CGPointMake(x, y3);
     
-    CALayer *lhb = [BaseLayer layerOfLineFrom:CGPointZero to:CGPointMake(0, y4-y2) withColor:color andWidth:1 fill:NO];
+    CALayer *lhb = [BaseLayer layerOfLineFrom:CGPointZero to:CGPointMake(0, y4-y2) withColor:color andWidth:1];
     lhb.position = CGPointMake(x, y2);
     
     if (isFall) {

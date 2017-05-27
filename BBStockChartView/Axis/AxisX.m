@@ -15,7 +15,7 @@
 - (void)drawAnimated:(BOOL)animated{
     CGFloat height = self.bounds.size.height;
     CGFloat width = self.bounds.size.width;
-    CALayer* line = [BaseLayer layerOfLineFrom:CGPointZero to:CGPointMake(width+2, 0) withColor:[BBTheme theme].axisColor andWidth:1 fill:NO];
+    CALayer* line = [BaseLayer layerOfLineFrom:CGPointZero to:CGPointMake(width+2, 0) withColor:[BBTheme theme].axisColor andWidth:1];
     line.position = CGPointMake(-2, 1);
     line.anchorPoint = CGPointZero;
     [self addSublayer:line];
@@ -37,7 +37,6 @@
             text = [NSString stringWithFormat:@"%d", i+1];
         }
         if (text && text.length > 0) {
-//            NSLog(@"Draw x: %d", i);
             CATextLayer* label = [BaseLayer layerOfText:text withFont:[BBTheme theme].fontName fontSize:[BBTheme theme].xAxisFontSize andColor:[BBTheme theme].axisColor];
             label.backgroundColor = [BBTheme theme].backgroundColor.CGColor;
             CGFloat w = [BBChartUtils textBoundsForFont:text andSize:[BBTheme theme].xAxisFontSize text:text].width;
@@ -53,12 +52,11 @@
             label.position = CGPointMake(idxWidth*i + idxWidth /2 , 5);
             [self addSublayer:label];
             
-            
-            CALayer *dash = [BaseLayer layerOfLineFrom:CGPointMake(floor(idxWidth * 0.5), 0) to:CGPointMake(idxWidth/2, 5) withColor:[BBTheme theme].axisColor andWidth:0.5 fill:NO];
+            CALayer *dash = [BaseLayer layerOfLineFrom:CGPointMake(floor(idxWidth * 0.5), 0) to:CGPointMake(idxWidth/2, 5) withColor:[BBTheme theme].axisColor andWidth:0.5];
             dash.anchorPoint = CGPointZero;
             dash.position = CGPointMake(floor(idxWidth * i), 1);
             
-            CALayer *line = [BaseLayer layerOfLineFrom:CGPointMake(floor(idxWidth * 0.5), -1) to:CGPointMake(idxWidth/2, -self.designHeight + height + 2) withColor:[[BBTheme theme].axisColor colorWithAlphaComponent:0.2] andWidth:0.5 fill:NO];
+            CALayer *line = [BaseLayer layerOfLineFrom:CGPointMake(floor(idxWidth * 0.5), -1) to:CGPointMake(idxWidth/2, -self.designHeight + height + 2) withColor:[[BBTheme theme].axisColor colorWithAlphaComponent:0.2] andWidth:0.5];
             line.anchorPoint = CGPointZero;
             line.position = CGPointMake(floor(idxWidth * i), 1);
             

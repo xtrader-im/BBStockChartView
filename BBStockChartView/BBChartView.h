@@ -18,11 +18,11 @@
 @property (nonatomic) BOOL realTimeScale;
 @property (nonatomic, assign) BOOL detailEnable;    // default as NO.
 
--(void)setHeighRatio:(CGFloat)heightRatio forArea:(Area*)area;
--(void)addArea:(Area *)area;
+- (void)setHeighRatio:(CGFloat)heightRatio forArea:(Area*)area;
+- (void)addArea:(Area *)area;
 
--(void)drawAnimated:(BOOL)animated;
--(void)reset;
+- (void)drawAnimated:(BOOL)animated;
+- (void)reset;
 - (void)redraw;
 
 
