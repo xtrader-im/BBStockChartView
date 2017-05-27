@@ -21,6 +21,27 @@
     
 }
 
++ (CALayer *)layerOfArrowFrom:(CGPoint)from to:(CGPoint)to withFillColor:(UIColor *)fillColor strokeColor:(UIColor *)strokeColor andWidth:(CGFloat)width {
+    CAShapeLayer *layer = [CAShapeLayer layer];
+    UIBezierPath *arrowPath = [UIBezierPath bezierPath];
+    CGFloat height = fabs(from.y - to.y);
+    [arrowPath moveToPoint:CGPointMake(from.x - width * 0.5, from.y)];
+    [arrowPath addLineToPoint:CGPointMake(from.x - width * 0.5, to.y)];
+    [arrowPath addLineToPoint:CGPointMake(to.x + width * 0.3, to.y)];
+    [arrowPath addLineToPoint:CGPointMake(to.x + width * 0.5, to.y - height * 0.5)];
+    [arrowPath addLineToPoint:CGPointMake(from.x + width * 0.3, from.y)];
+    [arrowPath addLineToPoint:CGPointMake(from.x - width * 0.5, from.y)];
+    [arrowPath closePath];
+    layer.path = arrowPath.CGPath;
+    
+    layer.opacity = 1.0;
+    layer.fillColor = fillColor.CGColor;
+    layer.strokeColor = strokeColor.CGColor;
+    layer.lineWidth = 1;
+    
+    return layer;
+}
+
 + (CALayer *)layerOfRectFrom:(CGPoint)from to:(CGPoint)to withColor:(UIColor*)color andWidth:(CGFloat)width fill:(BOOL)fill {
     CAShapeLayer *line = [CAShapeLayer layer];
     UIBezierPath *linePath = [UIBezierPath bezierPath];

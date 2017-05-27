@@ -17,6 +17,7 @@
 - (void)drawAnimated:(BOOL)animated;
 - (void)redrawAnimated:(BOOL)animated;
 
++ (CALayer *)layerOfArrowFrom:(CGPoint)from to:(CGPoint)to withFillColor:(UIColor *)fillColor strokeColor:(UIColor *)strokeColor andWidth:(CGFloat)width;
 + (CALayer *)layerOfRectFrom:(CGPoint)from to:(CGPoint)to withColor:(UIColor*)color andWidth:(CGFloat)width fill:(BOOL)fill;
 + (CALayer *)layerOfLineFrom:(CGPoint)from to:(CGPoint)to withColor:(UIColor*)color andWidth:(CGFloat)width;
 

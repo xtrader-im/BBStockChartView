@@ -77,11 +77,16 @@
         self.focusLineY.position = CGPointMake(-2, y);
         [self addSublayer:self.focusLineY];
         
-        self.priceBackgroundLayer = [BaseLayer layerOfRectFrom:CGPointZero to:CGPointMake(0, 20) withColor:[UIColor.whiteColor colorWithAlphaComponent:0.3] andWidth:48 fill:YES];
+        self.priceBackgroundLayer = [BaseLayer layerOfArrowFrom:CGPointZero to:CGPointMake(0, 20) withFillColor:[BBTheme theme].backgroundColor strokeColor:[BBTheme theme].axisColor andWidth:48];
         self.priceBackgroundLayer.position = CGPointMake(-26, y - 10);
         [self addSublayer:self.priceBackgroundLayer];
         
-        self.priceLabel = [BaseLayer layerOfText:[NSString stringWithFormat:@"%.1f", [self.axisAttached valForHeigth:self.bounds.size.height - y]] withFont:[BBTheme theme].fontName fontSize:[BBTheme theme].yAxisFontSize andColor:[BBTheme theme].axisColor];
+        CGFloat value = [self.axisAttached valForHeigth:self.bounds.size.height - y];
+        NSString *valueString = [NSString stringWithFormat:@"%.3f", value];
+        if (value > 1000) {
+            valueString = [NSString stringWithFormat:@"%.1f", value];
+        }
+        self.priceLabel = [BaseLayer layerOfText:valueString withFont:[BBTheme theme].fontName fontSize:[BBTheme theme].yAxisFontSize andColor:[BBTheme theme].axisColor];
         self.priceLabel.alignmentMode = kCAAlignmentRight;
         self.priceLabel.bounds = CGRectMake(0, 0, 45, 20);
         self.priceLabel.position = CGPointMake(-34, y + 4);
