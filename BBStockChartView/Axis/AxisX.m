@@ -56,11 +56,11 @@
             
             CALayer *dash = [BaseLayer layerOfLineFrom:CGPointMake(floor(idxWidth * 0.5), 0) to:CGPointMake(idxWidth/2, 5) withColor:[BBTheme theme].axisColor andWidth:0.5 fill:NO];
             dash.anchorPoint = CGPointZero;
-            dash.position = CGPointMake(idxWidth * i, 1);
+            dash.position = CGPointMake(floor(idxWidth * i), 1);
             
             CALayer *line = [BaseLayer layerOfLineFrom:CGPointMake(floor(idxWidth * 0.5), -1) to:CGPointMake(idxWidth/2, -self.designHeight + height + 2) withColor:[[BBTheme theme].axisColor colorWithAlphaComponent:0.2] andWidth:0.5 fill:NO];
             line.anchorPoint = CGPointZero;
-            line.position = CGPointMake(idxWidth * i, 1);
+            line.position = CGPointMake(floor(idxWidth * i), 1);
             
             [self addSublayer:line];
             [self addSublayer:dash];
