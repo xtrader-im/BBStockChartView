@@ -17,6 +17,7 @@
 
 @interface StockSeries : Series
 
--(void) addPointOpen:(CGFloat)o close:(CGFloat)c low:(CGFloat)l high:(CGFloat)h;
+- (void)addPointOpen:(CGFloat)o close:(CGFloat)c low:(CGFloat)l high:(CGFloat)h;
+- (NSUInteger)indexOfPoint:(CGPoint)point drawLine:(BOOL)drawLine;
 
 @end

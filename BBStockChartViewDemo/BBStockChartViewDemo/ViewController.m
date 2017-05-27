@@ -71,6 +71,16 @@
     
     // begin to show the view animated
     [self.chartView drawAnimated:YES];
+    
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
+    [self.chartView addGestureRecognizer:pan];
+}
+
+- (void)pan:(UIPanGestureRecognizer *)pan {
+    CGPoint location = [pan locationInView:self.chartView];
+    NSUInteger idx = [self.chartView indexOfPoint:location drawLine:UIGestureRecognizerStateEnded != pan.state];
+    NSLog(@"location idx: %d", idx);
+    
 }
 
 - (void)loadData{

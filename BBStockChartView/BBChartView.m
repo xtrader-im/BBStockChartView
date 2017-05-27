@@ -234,4 +234,23 @@
     _toastLabel.text = [NSString stringWithFormat:@"x %.1f", scale];
 }
 
+- (NSUInteger)indexOfPoint:(CGPoint)point drawLine:(BOOL)drawLine {
+    for (Area *area in _areas) {
+        if (CGRectContainsPoint(area.frame, point)) {
+            CGPoint areaPoint = [self.layer convertPoint:point toLayer:area];
+            for (int i = 0; i < area.theSeries.count; i++) {
+                Series *series = area.theSeries[i];
+                if (CGRectContainsPoint(series.frame, areaPoint)) {
+                    if ([series isKindOfClass:[StockSeries class]]) {
+                        CGPoint seriesPoint = [area convertPoint:areaPoint toLayer:series];
+                        return [((StockSeries *)series) indexOfPoint:seriesPoint drawLine:drawLine];
+                    }
+                }
+            }
+        }
+    }
+    
+    return NSNotFound;
+}
+
 @end

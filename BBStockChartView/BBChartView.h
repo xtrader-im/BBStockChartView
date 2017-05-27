@@ -25,5 +25,6 @@
 - (void)reset;
 - (void)redraw;
 
+- (NSUInteger)indexOfPoint:(CGPoint)point drawLine:(BOOL)drawLine;
 
 @end

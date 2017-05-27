@@ -12,6 +12,16 @@
 @implementation StockSeriesPoint
 
 @end
+
+@interface StockSeries ()
+
+@property (nonatomic, strong) CALayer   *focusLineX;
+@property (nonatomic, strong) CALayer   *focusLineY;
+@property (nonatomic, strong) CATextLayer   *priceLabel;
+@property (nonatomic, strong) CALayer   *priceBackgroundLayer;
+
+@end
+
 @implementation StockSeries
 
 - (void)addPointOpen:(CGFloat)o close:(CGFloat)c low:(CGFloat)l high:(CGFloat)h{
@@ -23,14 +33,62 @@
     [self.data addObject:p];
 }
 
-
 - (void)prepareForDraw{
     self.axisAttached.touchBottom = YES;
     for (StockSeriesPoint* n in self.data) {
         [self.axisAttached addContainingVal:n.high];
         [self.axisAttached addContainingVal:n.low];
     }
+}
+
+- (NSUInteger)indexOfPoint:(CGPoint)point drawLine:(BOOL)drawLine {
+    CGFloat fidx = floor((point.x - self.pointWidth / 2) / self.pointWidth);
+    fidx = fidx < 0 ? 0 : fidx;
+    NSUInteger idx = (NSUInteger)fidx;
     
+    if (self.focusLineX) {
+        [self.focusLineX removeFromSuperlayer];
+        self.focusLineX = nil;
+    }
+    
+    if (self.focusLineY) {
+        [self.focusLineY removeFromSuperlayer];
+        self.focusLineY = nil;
+    }
+    
+    if (self.priceLabel) {
+        [self.priceLabel removeFromSuperlayer];
+        self.priceLabel = nil;
+    }
+    
+    if (self.priceBackgroundLayer) {
+        [self.priceBackgroundLayer removeFromSuperlayer];
+        self.priceBackgroundLayer = nil;
+    }
+    
+    if (drawLine) {
+        CGFloat x = idx * self.pointWidth + self.pointWidth / 2;
+        CGFloat y = point.y;
+        self.focusLineX = [BaseLayer layerOfLineFrom:CGPointMake(0, 0) to:CGPointMake(0, self.bounds.size.height + 0.5) withColor:UIColor.whiteColor andWidth:0.5];
+        self.focusLineX.position = CGPointMake(x, 0.5);
+        [self addSublayer:self.focusLineX];
+        
+        self.focusLineY = [BaseLayer layerOfLineFrom:CGPointMake(0, 0) to:CGPointMake(self.bounds.size.width + 2, 0) withColor:UIColor.whiteColor andWidth:0.5];
+        self.focusLineY.position = CGPointMake(-2, y);
+        [self addSublayer:self.focusLineY];
+        
+        self.priceBackgroundLayer = [BaseLayer layerOfRectFrom:CGPointZero to:CGPointMake(0, 20) withColor:[UIColor.whiteColor colorWithAlphaComponent:0.3] andWidth:48 fill:YES];
+        self.priceBackgroundLayer.position = CGPointMake(-26, y - 10);
+        [self addSublayer:self.priceBackgroundLayer];
+        
+        self.priceLabel = [BaseLayer layerOfText:[NSString stringWithFormat:@"%.1f", [self.axisAttached valForHeigth:y]] withFont:[BBTheme theme].fontName fontSize:[BBTheme theme].yAxisFontSize andColor:[BBTheme theme].axisColor];
+        self.priceLabel.alignmentMode = kCAAlignmentRight;
+        self.priceLabel.bounds = CGRectMake(0, 0, 45, 20);
+        self.priceLabel.position = CGPointMake(-35, y + 4);
+        [self addSublayer:self.priceLabel];
+    }
+    
+    return idx;
 }
 
 - (void)drawPoint:(NSUInteger)idx animated:(BOOL)animated{
