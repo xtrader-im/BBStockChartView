@@ -78,9 +78,9 @@
 
 - (void)pan:(UIPanGestureRecognizer *)pan {
     CGPoint location = [pan locationInView:self.chartView];
-    NSUInteger idx = [self.chartView indexOfPoint:location drawLine:UIGestureRecognizerStateEnded != pan.state];
-    NSLog(@"location idx: %d", idx);
-    
+    NSUInteger idx = [self.chartView indexOfPoint:location drawLine:UIGestureRecognizerStateBegan == pan.state || UIGestureRecognizerStateChanged == pan.state];
+    NSLog(@"location idx: %lu", (unsigned long)idx);
+    NSLog(@"state: %ld", (long)pan.state);
 }
 
 - (void)loadData{

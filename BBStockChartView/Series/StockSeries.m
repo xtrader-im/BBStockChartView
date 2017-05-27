@@ -81,10 +81,10 @@
         self.priceBackgroundLayer.position = CGPointMake(-26, y - 10);
         [self addSublayer:self.priceBackgroundLayer];
         
-        self.priceLabel = [BaseLayer layerOfText:[NSString stringWithFormat:@"%.1f", [self.axisAttached valForHeigth:y]] withFont:[BBTheme theme].fontName fontSize:[BBTheme theme].yAxisFontSize andColor:[BBTheme theme].axisColor];
+        self.priceLabel = [BaseLayer layerOfText:[NSString stringWithFormat:@"%.1f", [self.axisAttached valForHeigth:self.bounds.size.height - y]] withFont:[BBTheme theme].fontName fontSize:[BBTheme theme].yAxisFontSize andColor:[BBTheme theme].axisColor];
         self.priceLabel.alignmentMode = kCAAlignmentRight;
         self.priceLabel.bounds = CGRectMake(0, 0, 45, 20);
-        self.priceLabel.position = CGPointMake(-35, y + 4);
+        self.priceLabel.position = CGPointMake(-34, y + 4);
         [self addSublayer:self.priceLabel];
     }
     

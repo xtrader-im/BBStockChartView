@@ -245,6 +245,12 @@
                         CGPoint seriesPoint = [area convertPoint:areaPoint toLayer:series];
                         return [((StockSeries *)series) indexOfPoint:seriesPoint drawLine:drawLine];
                     }
+                } else {
+                    if ([series isKindOfClass:[StockSeries class]]) {
+                        CGPoint seriesPoint = [area convertPoint:areaPoint toLayer:series];
+                        [((StockSeries *)series) indexOfPoint:seriesPoint drawLine:NO];
+                        return NSNotFound;
+                    }
                 }
             }
         }
