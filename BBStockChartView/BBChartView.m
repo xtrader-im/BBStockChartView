@@ -249,8 +249,14 @@
                     if ([series isKindOfClass:[StockSeries class]]) {
                         CGPoint seriesPoint = [area convertPoint:areaPoint toLayer:series];
                         [((StockSeries *)series) indexOfPoint:seriesPoint drawLine:NO];
-                        return NSNotFound;
                     }
+                }
+            }
+        } else {
+            for (int i = 0; i < area.theSeries.count; i++) {
+                Series *series = area.theSeries[i];
+                if ([series isKindOfClass:[StockSeries class]]) {
+                    [((StockSeries *)series) indexOfPoint:point drawLine:NO];
                 }
             }
         }
