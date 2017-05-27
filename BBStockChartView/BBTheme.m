@@ -7,6 +7,7 @@
 //
 
 #import "BBTheme.h"
+#import <CoreText/CoreText.h>
 
 BBTheme* _defTheme = nil;
 @implementation BBTheme
@@ -18,7 +19,7 @@ BBTheme* _defTheme = nil;
     return self;
 }
 
-+(BBTheme *)theme{
++ (BBTheme *)theme {
     if (!_defTheme) {
         _defTheme = [[BBTheme alloc] init];
         _defTheme.riseColor = [UIColor greenColor];
@@ -37,4 +38,14 @@ BBTheme* _defTheme = nil;
     }
     return _defTheme;
 }
+
+- (void)setFontName:(NSString *)fontName {
+    _fontName = [BBTheme postscriptNameFromFullName:fontName];
+}
+
++ (NSString *)postscriptNameFromFullName:(NSString *)fullName {
+    UIFont *font = [UIFont fontWithName:fullName size:1];
+    return (__bridge NSString *)(CTFontCopyPostScriptName((__bridge CTFontRef)(font)));
+}
+
 @end
