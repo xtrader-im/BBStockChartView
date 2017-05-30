@@ -31,7 +31,7 @@
     }
 }
 
-- (CGFloat)designHight{
+- (CGFloat)designHight {
     return self.bounds.size.height - 10;
 }
 
@@ -80,7 +80,7 @@
 - (void)drawAnimated:(BOOL)animated{
     CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
-    CALayer* line = [BaseLayer layerOfLineFrom:CGPointZero to:CGPointMake(0, self.designHight + 1) withColor:[BBTheme theme].axisColor andWidth:1];
+    CALayer* line = [BaseLayer layerOfLineFrom:CGPointZero to:CGPointMake(0, self.self.bounds.size.height + 1) withColor:[BBTheme theme].axisColor andWidth:1];
     line.position = CGPointMake(self.bounds.size.width-2, 0);
     [self addSublayer:line];
     
