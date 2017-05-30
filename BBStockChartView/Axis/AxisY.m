@@ -32,7 +32,7 @@
 }
 
 - (CGFloat)designHight{
-    return self.bounds.size.height;
+    return self.bounds.size.height - 10;
 }
 
 - (void)setTouchBottom:(BOOL)touchBottom{

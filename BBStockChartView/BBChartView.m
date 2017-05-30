@@ -11,6 +11,8 @@
 #import "StockSeries.h"
 #import "BBTheme.h"
 
+#define kTopPadding 0
+
 @interface BBChartView(){
     
     float _currentScale;
@@ -51,7 +53,7 @@
 - (void)_init{
     _areas = [[NSMutableArray alloc] init];
     _areaHeights = [[NSMutableArray alloc] init];
-    _chartView = [[UIView alloc] initWithFrame:self.frame];
+    _chartView = [[UIView alloc] initWithFrame:CGRectMake(0, kTopPadding, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) - kTopPadding)];
     self.userInteractionEnabled = YES;
     self.multipleTouchEnabled = YES;
     self.clipsToBounds = YES;
@@ -113,15 +115,15 @@
     
     [_areaHeights removeAllObjects];
     for (int i = 0; i < _areas.count; ++i) {
-        [_areaHeights addObject:[NSNumber numberWithFloat:1.0f/_areas.count*self.bounds.size.height]];
+        [_areaHeights addObject:[NSNumber numberWithFloat:1.0f / _areas.count * (self.bounds.size.height - kTopPadding)]];
     }
     
     
 }
 
-- (void)prepareForDraw{
+- (void)prepareForDraw {
     _toastView.frame = CGRectMake(self.frame.size.width / 2 - 50, 0, 100, 61.8);
-    _chartView.frame = CGRectMake(0, 0, self.frame.size.width * _currentScale, self.frame.size.height);
+    _chartView.frame = CGRectMake(0, kTopPadding, self.frame.size.width * _currentScale, self.frame.size.height - kTopPadding);
     CGFloat width = _chartView.layer.bounds.size.width;
     //    CGFloat height = self.layer.bounds.size.height;
     
@@ -164,7 +166,7 @@
 
 #pragma mark panGesture
 - (void) scaleWith:(float)ratio{
-    CGRect newFrame = CGRectMake(_chartView.frame.origin.x, _chartView.frame.origin.y, self.frame.size.width, self.frame.size.height);
+    CGRect newFrame = CGRectMake(_chartView.frame.origin.x, _chartView.frame.origin.y, self.frame.size.width, self.frame.size.height - kTopPadding);
     newFrame.size.width = newFrame.size.width * ratio;
     _chartView.frame = newFrame;
     [self redraw];
@@ -179,7 +181,7 @@
     }
     if (newX != _chartView.frame.origin.x) {
         [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            _chartView.frame = CGRectMake(newX, 0, _chartView.frame.size.width, _chartView.frame.size.height);
+            _chartView.frame = CGRectMake(newX, kTopPadding, _chartView.frame.size.width, _chartView.frame.size.height);
         } completion: nil];
     }
     
@@ -201,7 +203,7 @@
     }
     // make the drag smoother
     [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        _chartView.frame = CGRectMake(newX, 0, _chartView.frame.size.width, _chartView.frame.size.height);
+        _chartView.frame = CGRectMake(newX, kTopPadding, _chartView.frame.size.width, _chartView.frame.size.height);
     } completion: ^(BOOL finished){
         
     }];

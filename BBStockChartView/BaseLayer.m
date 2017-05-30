@@ -63,19 +63,24 @@
     return line;
 }
 
-
-+ (CALayer *)layerOfLineFrom:(CGPoint)from to:(CGPoint)to withColor:(UIColor*)color andWidth:(CGFloat)width {
++ (CALayer *)layerOfLineFrom:(CGPoint)from to:(CGPoint)to withColor:(UIColor*)color andWidth:(CGFloat)width lineDashPhase:(CGFloat)lineDashPhase {
     CAShapeLayer *line = [CAShapeLayer layer];
     UIBezierPath *linePath = [UIBezierPath bezierPath];
     [linePath moveToPoint: from];
     [linePath addLineToPoint:to];
     line.path = linePath.CGPath;
     line.fillColor = nil;
-    
+    if (0 != lineDashPhase) {
+        line.lineDashPattern = @[@(lineDashPhase), @(lineDashPhase)];
+    }
     line.opacity = 1.0;
     line.strokeColor = color.CGColor;
     line.lineWidth = width;
     return line;
+}
+
++ (CALayer *)layerOfLineFrom:(CGPoint)from to:(CGPoint)to withColor:(UIColor*)color andWidth:(CGFloat)width {
+    return [self layerOfLineFrom:from to:to withColor:color andWidth:width lineDashPhase:0];
 }
 // TODO: when line series is thick, their joint part would leave a small black space, which should be filled
 //+ (CALayer *)layerOfConcatLineFrom:(CGPoint)from to:(CGPoint)to withColor:(UIColor*)color andWidth:(CGFloat)width{

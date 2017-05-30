@@ -17,8 +17,12 @@
 
 @property (nonatomic, strong) CALayer   *focusLineX;
 @property (nonatomic, strong) CALayer   *focusLineY;
-@property (nonatomic, strong) CATextLayer   *priceLabel;
-@property (nonatomic, strong) CALayer   *priceBackgroundLayer;
+@property (nonatomic, strong) CATextLayer   *priceXLabel;
+@property (nonatomic, strong) CALayer   *priceXBackgroundLayer;
+@property (nonatomic, assign) CGFloat       maxValue;
+@property (nonatomic, assign) NSUInteger    maxIndex;
+@property (nonatomic, assign) CGFloat       minValue;
+@property (nonatomic, assign) NSUInteger    minIndex;
 
 @end
 
@@ -33,11 +37,24 @@
     [self.data addObject:p];
 }
 
-- (void)prepareForDraw{
+- (void)prepareForDraw {
     self.axisAttached.touchBottom = YES;
-    for (StockSeriesPoint* n in self.data) {
+    self.minValue = FLT_MAX;
+    self.maxValue = -FLT_MAX;
+    for (int i = 0; i < self.data.count; i++) {
+        StockSeriesPoint *n = self.data[i];
         [self.axisAttached addContainingVal:n.high];
         [self.axisAttached addContainingVal:n.low];
+        
+        if (self.minValue > n.low) {
+            self.minValue = n.low;
+            self.minIndex = i;
+            NSLog(@"%0.3f", n.low);
+        }
+        if (self.maxValue < n.high) {
+            self.maxValue = n.high;
+            self.maxIndex = i;
+        }
     }
 }
 
@@ -56,14 +73,14 @@
         self.focusLineY = nil;
     }
     
-    if (self.priceLabel) {
-        [self.priceLabel removeFromSuperlayer];
-        self.priceLabel = nil;
+    if (self.priceXLabel) {
+        [self.priceXLabel removeFromSuperlayer];
+        self.priceXLabel = nil;
     }
     
-    if (self.priceBackgroundLayer) {
-        [self.priceBackgroundLayer removeFromSuperlayer];
-        self.priceBackgroundLayer = nil;
+    if (self.priceXBackgroundLayer) {
+        [self.priceXBackgroundLayer removeFromSuperlayer];
+        self.priceXBackgroundLayer = nil;
     }
     
     if (drawLine) {
@@ -77,20 +94,20 @@
         self.focusLineY.position = CGPointMake(-2, y);
         [self addSublayer:self.focusLineY];
         
-        self.priceBackgroundLayer = [BaseLayer layerOfArrowFrom:CGPointZero to:CGPointMake(0, 20) withFillColor:[BBTheme theme].backgroundColor strokeColor:[BBTheme theme].axisColor andWidth:48];
-        self.priceBackgroundLayer.position = CGPointMake(-26, y - 10);
-        [self addSublayer:self.priceBackgroundLayer];
+        self.priceXBackgroundLayer = [BaseLayer layerOfArrowFrom:CGPointZero to:CGPointMake(0, 20) withFillColor:[BBTheme theme].backgroundColor strokeColor:[BBTheme theme].axisColor andWidth:48];
+        self.priceXBackgroundLayer.position = CGPointMake(-26, y - 10);
+        [self addSublayer:self.priceXBackgroundLayer];
         
         CGFloat value = [self.axisAttached valForHeigth:self.bounds.size.height - y];
         NSString *valueString = [NSString stringWithFormat:@"%.3f", value];
         if (value > 1000) {
             valueString = [NSString stringWithFormat:@"%.1f", value];
         }
-        self.priceLabel = [BaseLayer layerOfText:valueString withFont:[BBTheme theme].fontName fontSize:[BBTheme theme].yAxisFontSize andColor:[BBTheme theme].axisColor];
-        self.priceLabel.alignmentMode = kCAAlignmentRight;
-        self.priceLabel.bounds = CGRectMake(0, 0, 45, 20);
-        self.priceLabel.position = CGPointMake(-34, y + 4);
-        [self addSublayer:self.priceLabel];
+        self.priceXLabel = [BaseLayer layerOfText:valueString withFont:[BBTheme theme].fontName fontSize:[BBTheme theme].yAxisFontSize andColor:[BBTheme theme].axisColor];
+        self.priceXLabel.alignmentMode = kCAAlignmentRight;
+        self.priceXLabel.bounds = CGRectMake(0, 0, 45, 20);
+        self.priceXLabel.position = CGPointMake(-34, y + 4);
+        [self addSublayer:self.priceXLabel];
     }
     
     return idx;
@@ -142,6 +159,64 @@
     [self addSublayer:lht];
     [self addSublayer:lhb];
     [self addSublayer:oc];
+    
+    if (idx == self.maxIndex) {
+        NSString *valueString = [NSString stringWithFormat:@"%.3f", point.high];
+        if (point.high > 1000) {
+            valueString = [NSString stringWithFormat:@"%.1f", point.high];
+        }
+        
+        CGFloat y = height - [self.axisAttached heighForVal:point.high];
+        CATextLayer *high = [BaseLayer layerOfText:valueString withFont:[BBTheme theme].fontName fontSize:[BBTheme theme].yAxisFontSize andColor:[BBTheme theme].axisColor];
+        CALayer *line = [BaseLayer layerOfLineFrom:CGPointMake(0, 0) to:CGPointMake(18, 0) withColor:[BBTheme theme].axisColor andWidth:0.5 lineDashPhase:3];
+        if (idx + 10 < self.data.count) {
+            high.alignmentMode = kCAAlignmentLeft;
+            high.anchorPoint = CGPointMake(0, 0.5);
+            high.bounds = CGRectMake(0, 0, 55, 20);
+            high.position = CGPointMake(x + 19, y + 4);
+            line.position = CGPointMake(0, 0.5);
+        } else {
+            high.alignmentMode = kCAAlignmentRight;
+            high.anchorPoint = CGPointMake(1, 0.5);
+            high.bounds = CGRectMake(0, 0, 55, 20);
+            high.position = CGPointMake(x + 19, y + 4);
+            line.position = CGPointMake(1, 0.5);
+        }
+        
+        line.position = CGPointMake(x, y);
+        
+        [self addSublayer:line];
+        [self addSublayer:high];
+    }
+    
+    if (idx == self.minIndex) {
+        NSString *valueString = [NSString stringWithFormat:@"%.3f", point.low];
+        if (point.low > 1000) {
+            valueString = [NSString stringWithFormat:@"%.1f", point.low];
+        }
+        
+        CGFloat y = height - [self.axisAttached heighForVal:point.low];
+        CATextLayer *low = [BaseLayer layerOfText:valueString withFont:[BBTheme theme].fontName fontSize:[BBTheme theme].yAxisFontSize andColor:[BBTheme theme].axisColor];
+        CALayer *line = [BaseLayer layerOfLineFrom:CGPointMake(0, 0) to:CGPointMake(18, 0) withColor:[BBTheme theme].axisColor andWidth:0.5 lineDashPhase:3];
+        if (idx + 10 < self.data.count) {
+            low.alignmentMode = kCAAlignmentLeft;
+            low.anchorPoint = CGPointMake(0, 0.5);
+            low.bounds = CGRectMake(0, 0, 55, 20);
+            low.position = CGPointMake(x + 19, y + 4);
+            line.position = CGPointMake(0, 0.5);
+        } else {
+            low.alignmentMode = kCAAlignmentRight;
+            low.anchorPoint = CGPointMake(1, 0.5);
+            low.bounds = CGRectMake(0, 0, 55, 20);
+            low.position = CGPointMake(x - 19, y + 4);
+            line.position = CGPointMake(1, 0.5);
+        }
+        
+        line.position = CGPointMake(x, y);
+        
+        [self addSublayer:line];
+        [self addSublayer:low];
+    }
     
     if (animated) {
         CABasicAnimation* ani = [CABasicAnimation animationWithKeyPath:@"transform.scale.y"];
