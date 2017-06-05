@@ -175,15 +175,15 @@
             high.bounds = CGRectMake(0, 0, 55, 20);
             high.position = CGPointMake(x + 19, y + 4);
             line.anchorPoint = CGPointMake(0, 0.5);
+            line.position = CGPointMake(x, y);
         } else {
             high.alignmentMode = kCAAlignmentRight;
             high.anchorPoint = CGPointMake(1, 0.5);
             high.bounds = CGRectMake(0, 0, 55, 20);
-            high.position = CGPointMake(x + 19, y + 4);
+            high.position = CGPointMake(x - 19, y + 4);
             line.anchorPoint = CGPointMake(1, 0.5);
+            line.position = CGPointMake(x - 18, y);
         }
-        
-        line.position = CGPointMake(x, y);
         
         [self addSublayer:line];
         [self addSublayer:high];
@@ -204,15 +204,15 @@
             low.bounds = CGRectMake(0, 0, 55, 20);
             low.position = CGPointMake(x + 19, y + 4);
             line.anchorPoint = CGPointMake(0, 0.5);
+            line.position = CGPointMake(x, y);
         } else {
             low.alignmentMode = kCAAlignmentRight;
             low.anchorPoint = CGPointMake(1, 0.5);
             low.bounds = CGRectMake(0, 0, 55, 20);
             low.position = CGPointMake(x - 19, y + 4);
             line.anchorPoint = CGPointMake(1, 0.5);
+            line.position = CGPointMake(x - 18, y);
         }
-        
-        line.position = CGPointMake(x, y);
         
         [self addSublayer:line];
         [self addSublayer:low];
